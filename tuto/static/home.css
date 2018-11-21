@@ -1,0 +1,17 @@
+h1{
+  color:red;
+}
+
+div.sample{
+  text-align: center;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+li{
+  list-style: none;
+}
+
+#main {
+  margin-top: 5em;
+}
