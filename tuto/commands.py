@@ -4,7 +4,32 @@ from .app import app, db
 @app.cli.command()
 def syncdb():
     db.create_all()
-    
+
+@app.cli.command()
+@click.argument('username')
+@click.argument('password')
+def newuser(username, password):
+    '''Adds a new user'''
+    from .models import User
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    u = User(username=username, password=m.hexdigest())
+    db.session.add(u)
+    db.session.commit()
+
+@app.cli.command()
+@click.argument('username')
+@click.argument('password')
+def passwd(username, password):
+    '''Modifies an existing user's password'''
+    from .models import User
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    u = User(username=username, password=m.hexdigest())
+    db.session.commit()
+
 @click.argument('filename')
 def loaddb(filename):
     '''Creates the tables and populates them with data.'''
