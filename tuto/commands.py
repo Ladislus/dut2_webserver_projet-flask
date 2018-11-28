@@ -2,6 +2,9 @@ import click
 from .app import app, db
 
 @app.cli.command()
+def syncdb():
+    db.create_all()
+    
 @click.argument('filename')
 def loaddb(filename):
     '''Creates the tables and populates them with data.'''

@@ -23,7 +23,7 @@ class Book(db.Model):
     def __repr__(self):
         return "<Book (%d) %s>" % (self.id, self.title)
 
-class User(db.model, UserMixin):
+class User(db.Model, UserMixin):
     username = db.Column(db.String(50), primary_key = True)
     password = db.Column(db.String(64))
 
