@@ -1,6 +1,6 @@
 import os.path
 import random
-from .app import db
+from .app import db, login_manager
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -29,6 +29,10 @@ class User(db.Model, UserMixin):
 
     def get_id(self):
         return self.username
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(username)
 
 def get_sample(n = 10):
     return Book.query.limit(n).all()

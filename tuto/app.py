@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 
 from flask_bootstrap import Bootstrap
 
+from flask_login import LoginManager
+
 app = Flask(__name__)
 Bootstrap(app)
 app.debug = True
@@ -25,3 +27,5 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 db = SQLAlchemy(app)
 
 app.config["SECRET_KEY"] = "fec03c30-124c-43b2-85db-4dfb72c4b56e"
+
+login_manager = LoginManager(app)

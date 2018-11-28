@@ -1,9 +1,10 @@
 from .app import app, db
 from flask import render_template, url_for, redirect
 from flask_wtf import FlaskForm
-from wtforms import StringField, HiddenField
+from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
-from .models import get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
+from .models import User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
+from hashlib import sha256
 
 # class AddAuthor(FlaskForm):
 #     id  = HiddenField('id')
@@ -11,6 +12,20 @@ from .models import get_books, get_book, get_sample, get_authors, get_author, ge
 #
 # @app.route("/add/author/")
 # def add_author(id):
+
+class LoginForm(FlaskForm):
+    username  = StringField('Username')
+    password  = PasswordField('Password')
+
+    def get_authenticated_user(self):
+        user = User.query.get(self.username.data)
+        if user is None:
+            return None
+        m = sha256()
+        m.update(self.password.data.encode())
+        passwd = m.hexdigest()
+        return user if passwd == user.password else None
+
 
 class AuthorForm(FlaskForm):
     id  = HiddenField('id')
