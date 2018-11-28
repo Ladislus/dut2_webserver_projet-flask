@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{%block main %}
+<div class="row">
+{% for x in BOOKS %}
+  <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
+    {{ x.name }}
+  </div>
+{% endfor %}
+</div>
+{% endblock %}
+{% block js %}
+{{ super() }}
+tabcur = "tab-books";
+{% endblock %}
