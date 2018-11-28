@@ -5,6 +5,13 @@ from wtforms import StringField, HiddenField
 from wtforms.validators import DataRequired
 from .models import get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
 
+# class AddAuthor(FlaskForm):
+#     id  = HiddenField('id')
+#     name= StringField('Nom', validators = [DataRequired()])
+#
+# @app.route("/add/author/")
+# def add_author(id):
+
 class AuthorForm(FlaskForm):
     id  = HiddenField('id')
     name= StringField('Nom', validators = [DataRequired()])

@@ -2,6 +2,7 @@ import os.path
 import random
 from .app import db
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 
 class Author(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
@@ -22,7 +23,12 @@ class Book(db.Model):
     def __repr__(self):
         return "<Book (%d) %s>" % (self.id, self.title)
 
+class User(db.model, UserMixin):
+    username = db.Column(db.String(50), primary_key = True)
+    password = db.Column(db.String(64))
 
+    def get_id(self):
+        return self.username
 
 def get_sample(n = 10):
     return Book.query.limit(n).all()
