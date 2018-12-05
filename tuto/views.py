@@ -45,6 +45,7 @@ class AuthorForm(FlaskForm):
     name= StringField('Nom', validators = [DataRequired()])
 
 @app.route("/edit/author/<int:id>")
+@login_required
 def edit_author(id):
     a = get_author(id)
     f = AuthorForm(id=a.id, name=a.name)
