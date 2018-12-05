@@ -27,6 +27,18 @@ class LoginForm(FlaskForm):
         passwd = m.hexdigest()
         return user if passwd == user.password else None
 
+@app.route("/login/", methods=("GET", "POST",))
+def login():
+    f = LoginForm()
+    if f.validate_on_submit():
+        user = f.get_authenticated_user()
+        if user:
+            login_user(user)
+            return redirect(url_for("home"))
+    return render_template(
+        "login.html",
+        form = f
+    )
 
 class AuthorForm(FlaskForm):
     id  = HiddenField('id')
