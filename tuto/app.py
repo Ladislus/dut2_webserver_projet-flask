@@ -29,3 +29,4 @@ db = SQLAlchemy(app)
 app.config["SECRET_KEY"] = "fec03c30-124c-43b2-85db-4dfb72c4b56e"
 
 login_manager = LoginManager(app)
+login_manager.login_view = "login"
