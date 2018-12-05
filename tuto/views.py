@@ -1,7 +1,7 @@
 from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_wtf import FlaskForm
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, login_required
 from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
 from .models import User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
@@ -17,6 +17,7 @@ from hashlib import sha256
 class LoginForm(FlaskForm):
     username  = StringField('Username')
     password  = PasswordField('Password')
+    next      = HiddenField()
 
     def get_authenticated_user(self):
         user = User.query.get(self.username.data)
@@ -30,11 +31,14 @@ class LoginForm(FlaskForm):
 @app.route("/login/", methods=("GET", "POST",))
 def login():
     f = LoginForm()
-    if f.validate_on_submit():
+    if not f.is_submitted():
+        f.next.data =request.args.get("next")
+    elif f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
             login_user(user)
-            return redirect(url_for("home"))
+            next = f.next.data or url_for("home")
+            return redirect(next)
     return render_template(
         "login.html",
         form = f
