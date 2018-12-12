@@ -64,3 +64,6 @@ def loaddb(filename):
                  author_id = a.id)
         db.session.add(o)
     db.session.commit()
+
+def adddb(o):
+    db.session.add(o)
