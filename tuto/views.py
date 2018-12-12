@@ -8,12 +8,6 @@ from .models import Author, User, get_books, get_book, get_sample, get_authors, 
 from hashlib import sha256
 from .commands import adddb
 
-# class AddAuthor(FlaskForm):
-#     id  = HiddenField('id')
-#     name= StringField('Nom', validators = [DataRequired()])
-#
-# @app.route("/add/author/")
-# def add_author(id):
 
 class LoginForm(FlaskForm):
     username  = StringField('Username')
