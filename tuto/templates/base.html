@@ -41,6 +41,11 @@
         <li><a href="{{ url_for('logout') }}">
           <span class = "glyphicon glyphicon-log-out" title="Logout"></span>
         </a></li>
+        {% else %}
+        <li><a>{{ current_user.username }}</a></li>
+        <li><a href="{{ url_for('login') }}">
+          <span class = "glyphicon glyphicon-log-in" title="Login"></span>
+        </a></li>
         {% endif %}
     </div><!--/.nav-collapse -->
   </div>
