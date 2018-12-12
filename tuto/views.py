@@ -4,8 +4,9 @@ from flask_wtf import FlaskForm
 from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
-from .models import User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
+from .models import Author, User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
 from hashlib import sha256
+from .commands import adddb
 
 # class AddAuthor(FlaskForm):
 #     id  = HiddenField('id')
@@ -115,3 +116,18 @@ def authors():
             "authors.html",
             title="Book shop",
             BOOKS=get_authors())
+
+@app.route("/add/author/")
+def add_author():
+	f = AuthorForm(id=get_authors()[-1].id+1, name="")
+	return render_template("add-author.html", form=f)
+
+@app.route("/added/author", methods=("POST",))
+def added_author():
+	f = AuthorForm()
+	if f.validate_on_submit():
+		adddb(Author(name=f.name.data, id=f.id.data))
+		db.session.commit()
+		return redirect(url_for('author', index=f.id.data))
+	a = get_author(int(f.id.data))
+	return render_template("add-author.html", author=a, form=f)
