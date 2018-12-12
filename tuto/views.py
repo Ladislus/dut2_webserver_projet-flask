@@ -8,7 +8,7 @@ from .models import Author, User, get_books, get_book, get_sample, get_authors, 
 from hashlib import sha256
 from .commands import adddb
 
-
+#LOGIN
 class LoginForm(FlaskForm):
     username  = StringField('Username')
     password  = PasswordField('Password')
@@ -39,6 +39,7 @@ def login():
         form = f
     )
 
+#LOGOUT
 @app.route("/logout")
 def logout():
     logout_user()
@@ -48,6 +49,7 @@ class AuthorForm(FlaskForm):
     id  = HiddenField('id')
     name= StringField('Nom', validators = [DataRequired()])
 
+#EDIT AUTHOR
 @app.route("/edit/author/<int:id>")
 @login_required
 def edit_author(id):
@@ -59,6 +61,7 @@ def edit_author(id):
         author=a, form=f
     )
 
+#SAVE AUTHOR
 @app.route("/save/author/", methods=('POST',))
 def save_author():
     a = None
@@ -75,6 +78,7 @@ def save_author():
         title = "Book shop",
         author = a, form = f)
 
+#HOME
 @app.route("/")
 def home():
     return render_template(
@@ -82,6 +86,7 @@ def home():
             title="Book shop",
             BOOKS=get_books(10))
 
+#BOOKS
 @app.route("/books/")
 def books():
     return render_template(
@@ -89,6 +94,7 @@ def books():
             title="Book shop",
             BOOKS=get_books())
 
+#SPECIAL SEARCH BOOK
 @app.route("/book/<int:index>")
 def book(index):
     return render_template(
