@@ -67,5 +67,7 @@ def loaddb(filename):
         db.session.add(o)
     db.session.commit()
 
+@app.cli.command()
 def adddb(o):
+    '''Adds current session to db'''
     db.session.add(o)
