@@ -3,6 +3,7 @@ from .app import app, db
 
 @app.cli.command()
 def syncdb():
+    '''Syncs the database'''
     db.create_all()
 
 @app.cli.command()
@@ -30,6 +31,7 @@ def passwd(username, password):
     u = User(username=username, password=m.hexdigest())
     db.session.commit()
 
+@app.cli.command()
 @click.argument('filename')
 def loaddb(filename):
     '''Creates the tables and populates them with data.'''
