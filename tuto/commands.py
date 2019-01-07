@@ -30,6 +30,7 @@ def passwd(username, password):
     u = User(username=username, password=m.hexdigest())
     db.session.commit()
 
+@app.cli.command()
 @click.argument('filename')
 def loaddb(filename):
     '''Creates the tables and populates them with data.'''
@@ -42,7 +43,7 @@ def loaddb(filename):
     books = yaml.load(open(filename))
 
     # Import des modèles
-    from .models import Author, Book
+    from .models import Author, Book, User
 
     # Première passe : création de tous les auteurs
     authors = {}
