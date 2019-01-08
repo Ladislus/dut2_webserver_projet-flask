@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
 def login():
     f = LoginForm()
     if not f.is_submitted():
-        f.next.data =request.args.get("next")
+        f.next.data = request.args.get("next")
     elif f.validate_on_submit():
         user = f.get_authenticated_user()
         if user:
