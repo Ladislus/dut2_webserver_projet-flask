@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
 <h1>{{ author.name }}</h1>
-{% if current_user.is_authenticated %}
-<a href = "{{ url_for('edit-author', id=author.id) }}">Edit author's page</a>
-{% endif %}
 <h1>Author's books :</h1>
 <div class="row">
 {% for x in books %}
