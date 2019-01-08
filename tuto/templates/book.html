@@ -5,7 +5,9 @@
     <img src=" {{ url_for('static', filename = 'images/' +BOOKS.img) }} ">
 
     <h1>{{ BOOKS.title }}</h1>
-    <p>{{ BOOKS.author.name }}</p>
+    <a href = "{{ url_for('author', index=BOOKS.author.id) }}">
+      <p>{{ BOOKS.author.name }}</p>
+    </a>
     <p>{{ BOOKS.price }} €</p>
 
   </div>
