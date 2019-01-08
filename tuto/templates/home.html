@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {%block main %}
 <div class="row">
-  <h1>Awsome tities</h1>
+  <h1>Amazon's awesome books</h1>
+  <p>Amazon's awesome books is the largest and biggest collection of books on Internet of the World Wide Web.
+  <p>You can also find awesome things like pages, books, and authors and even login or change author or books!
+  <p>Awesome isn't it?
 {% for x in BOOKS %}
   <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
     <img src=" {{ url_for('static', filename = 'images/' +x.img) }} ">
