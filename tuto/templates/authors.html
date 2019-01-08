@@ -1,6 +1,34 @@
 {% extends "base.html" %}
 {%block main %}
-<div class="row">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container">
+  <h2>Liste des auteurs</h2>
+  <p>Rechercher un auteur par nom :</p>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>
+  <table class="table table-bordered table-striped">
+    <tbody id="myTable">
+      {% for x in AUTHORS %}
+      <tr>
+        <td><a href = "{{ url_for('author', index=x.id) }}">{{ x.name }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<!-- <div class="row">
 {% for x in AUTHORS %}
 <a href = "{{ url_for('author', index=x.id) }}">
   <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
@@ -8,7 +36,7 @@
   </div>
 </a>
 {% endfor %}
-</div>
+</div> -->
 {% endblock %}
 {% block js %}
 {{ super() }}
