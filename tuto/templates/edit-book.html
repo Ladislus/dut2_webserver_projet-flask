@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block main %}
-<h1>Edit author : {{ author.name }}</h1>
-
+<h1>Edit book : {{ book.title }}</h1>
+<form role="form" method="POST" action="{{ url_for('save_book') }}">
+  <img src=" {{ url_for('static', filename = 'images/' +book.img) }} ">
     {{ form.hidden_tag() }}
     <div class=
-      {% if form.name.errors %}
+      {% if form.title.errors %}
       "form-group has errors"
       {% else %}
       "form-group"
       {% endif %}
       >
-      {{ form.name.label }}
-      {{ form.name(size = 50, class = "form-control") }}
+      {{ form.title.label }}
+      {{ form.title(size = 50, class = "form-control") }}
     </div>
-    <form role="form" method="POST" action="{{ url_for('save_author') }}">
     <p><p>
-    {% if form.name.errors%}
+    {% if form.title.errors%}
     <ul class ="list-group">
-      {% for e in form.name.errors %}
+      {% for e in form.title.errors %}
       <li class = "list-group-item list-group-item-danger">{{ e }}</li>
       {% endfor %}
     </ul>

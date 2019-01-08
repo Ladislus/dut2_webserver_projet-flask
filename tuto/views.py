@@ -130,4 +130,40 @@ def added_author():
 		db.session.commit()
 		return redirect(url_for('author', index=f.id.data))
 	a = get_author(int(f.id.data))
+
 	return render_template("add-author.html", author=a, form=f)
+
+class BookForm(FlaskForm):
+    id  = HiddenField('id')
+    title= StringField('Title', validators = [DataRequired()])
+    author= StringField('Author')
+    price= StringField('Price')
+
+#EDIT BOOK
+@app.route("/edit/book/<int:id>")
+@login_required
+def edit_book(id):
+    b = get_book(id)
+    f = BookForm(id=b.id, title=b.title)
+    return render_template(
+        "edit-book.html",
+        title="Book shop",
+        book=b, form=f
+    )
+
+#SAVE BOOK
+@app.route("/save/book/", methods=('POST',))
+def save_book():
+    b = None
+    f = BookForm()
+    if f.validate_on_submit():
+        id = int(f.id.data)
+        b = get_book(id)
+        b.title = f.title.data
+        db.session.commit()
+        return redirect(url_for('home', id=b.id))
+    b = get_book(int(f.id.data))
+    return render_template(
+        "edit-book.html",
+        title = "Book shop",
+        book = b, form = f)
