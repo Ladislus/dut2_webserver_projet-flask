@@ -1,6 +1,7 @@
 import os.path
 import random
 from .app import db, login_manager
+from sqlalchemy import PrimaryKeyConstraint
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
@@ -10,6 +11,20 @@ class Author(db.Model):
 
     def __repr__(self):
         return "<Author (%d) %s>" % (self.id, self.name)
+
+class Cart(db.Model):
+    id_user = db.Column(db.Integer, db.ForeignKey("user.id"))
+    id_book = db.Column(db.Integer, db.ForeignKey("book.id"))
+    PrimaryKeyConstraint("id_user", "id_book")
+
+    def get_ids(self):
+        return (self.id_user, self.id_book)
+
+    def get_user(self):
+        return self.id_user
+
+    def get_book(self):
+        return self.id_book
 
 class Book(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
