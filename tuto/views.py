@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
-from .models import Author, User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks
+from .models import Author, User, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks, get_random_book
 from hashlib import sha256
 from .commands import adddb
 
@@ -84,7 +84,7 @@ def home():
     return render_template(
             "home.html",
             title="Book shop",
-            BOOKS=get_books(10))
+            BOOKS=get_random_book())
 
 #BOOKS
 @app.route("/books/")

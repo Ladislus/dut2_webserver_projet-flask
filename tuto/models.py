@@ -2,6 +2,7 @@ import os.path
 import random
 from .app import db, login_manager
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql.expression import func
 from flask_login import UserMixin
 
 class Author(db.Model):
@@ -34,11 +35,14 @@ class User(db.Model, UserMixin):
 def load_user(username):
     return User.query.get(username)
 
+def get_random_book(n = 10):
+    return Book.query.order_by(func.random()).limit(n).all()
+
 def get_sample(n = 10):
     return Book.query.limit(n).all()
 
 def get_books(n = None):
-    return Book.query.all()
+    return get_sample(n) if n else Book.query.all()
 
 def get_book(id):
     return Book.query.get(id)
