@@ -11,12 +11,14 @@
     <p>{{ BOOKS.price }} €</p>
 
   </div>
-
-  {% if current_user.is_authenticated %}
-    <input type="submit" class="btn btn-primary" value="Add to Cart">
-  {% endif %}
-
 </div>
+
+{% if current_user.is_authenticated %}
+  <a href = "{{ url_for('/added/cart', index=BOOKS.id) }}">
+    <input type="submit" class="btn btn-primary" value="Add to Cart">
+  </a>
+{% endif %}
+
 {% endblock %}
 {% block js %}
 {{ super() }}
