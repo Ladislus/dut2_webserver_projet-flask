@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
 <h1>Edit author : {{ author.name }}</h1>
-<form role="form" method="POST" action="{{ url_for('save_author') }}">
+
     {{ form.hidden_tag() }}
     <div class=
       {% if form.name.errors %}
@@ -13,6 +13,7 @@
       {{ form.name.label }}
       {{ form.name(size = 50, class = "form-control") }}
     </div>
+    <form role="form" method="POST" action="{{ url_for('save_author') }}">
     <p><p>
     {% if form.name.errors%}
     <ul class ="list-group">
