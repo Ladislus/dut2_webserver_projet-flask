@@ -1,6 +1,7 @@
 import os.path
 import random
 from .app import db, login_manager
+from sqlalchemy import PrimaryKeyConstraint
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
 from flask_login import UserMixin
@@ -55,3 +56,19 @@ def get_author(id):
 
 def get_authorbooks(id):
     return Book.query.filter(Book.author == get_author(id)).all()
+
+class Cart(db.Model):
+    username_user = db.Column(db.Integer, db.ForeignKey("user.username"), primary_key = True)
+    id_book = db.Column(db.Integer, db.ForeignKey("book.id"), primary_key = True)
+
+    def get_ids(self):
+        return (self.username_user, self.id_book)
+
+    def get_user(self):
+        return self.username_user
+
+    def get_book(self):
+        return self.id_book
+
+def get_cart_books(username):
+    return Cart.query.all()
