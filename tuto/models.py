@@ -54,14 +54,14 @@ def get_authorbooks(id):
     return Book.query.filter(Book.author == get_author(id)).all()
 
 class Cart(db.Model):
-    user = db.Column(db.Integer, db.ForeignKey("user.username"), primary_key = True)
+    username_user = db.Column(db.Integer, db.ForeignKey("user.username"), primary_key = True)
     id_book = db.Column(db.Integer, db.ForeignKey("book.id"), primary_key = True)
 
     def get_ids(self):
-        return (self.user, self.id_book)
+        return (self.username_user, self.id_book)
 
     def get_user(self):
-        return self.user
+        return self.username_user
 
     def get_book(self):
         return self.id_book
