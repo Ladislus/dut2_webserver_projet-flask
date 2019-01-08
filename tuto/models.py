@@ -69,3 +69,6 @@ class Cart(db.Model):
 
     def get_book(self):
         return self.id_book
+
+def get_cart_books(username):
+    return Cart.query.all()
