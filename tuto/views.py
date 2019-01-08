@@ -142,6 +142,12 @@ def added_author():
 
 	return render_template("add-author.html", author=a, form=f)
 
+@app.route("/added/cart", methods=("POST",))
+def added_cart(id):
+    adddb(Cart(username=current_user.username, id_book=id))
+    db.session.commit()
+    return redirect(url_for('cart'))
+
 class BookForm(FlaskForm):
     id  = HiddenField('id')
     title= StringField('Title', validators = [DataRequired()])
