@@ -11,6 +11,11 @@
     <p>{{ BOOKS.price }} €</p>
 
   </div>
+
+  {% if current_user.is_authenticated %}
+    <input type="submit" class="btn btn-primary" value="Add to Cart">
+  {% endif %}
+
 </div>
 {% endblock %}
 {% block js %}
