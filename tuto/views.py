@@ -115,7 +115,7 @@ def authors():
     return render_template(
             "authors.html",
             title="Book shop",
-            BOOKS=get_authors())
+            AUTHORS=get_authors())
 
 @app.route("/add/author/")
 def add_author():

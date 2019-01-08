@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {%block main %}
 <div class="row">
-{% for x in BOOKS %}
+{% for x in AUTHORS %}
+<a href = "{{ url_for('author', index=x.id) }}">
   <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
     {{ x.name }}
   </div>
+</a>
 {% endfor %}
 </div>
 {% endblock %}

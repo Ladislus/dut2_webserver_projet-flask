@@ -3,7 +3,9 @@
 <div class="row">
 {% for x in BOOKS %}
   <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
-    <img src=" {{ url_for('static', filename = 'images/' +x.img) }} ">
+    <a href = "{{ url_for('book', index=x.id) }}">
+      <img src=" {{ url_for('static', filename = 'images/' +x.img) }} ">
+    </a>
   </div>
 {% endfor %}
 </div>
