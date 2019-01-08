@@ -12,20 +12,6 @@ class Author(db.Model):
     def __repr__(self):
         return "<Author (%d) %s>" % (self.id, self.name)
 
-class Cart(db.Model):
-    id_user = db.Column(db.Integer, db.ForeignKey("user.id"))
-    id_book = db.Column(db.Integer, db.ForeignKey("book.id"))
-    PrimaryKeyConstraint("id_user", "id_book")
-
-    def get_ids(self):
-        return (self.id_user, self.id_book)
-
-    def get_user(self):
-        return self.id_user
-
-    def get_book(self):
-        return self.id_book
-
 class Book(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
     img         = db.Column(db.String(100))
@@ -66,3 +52,16 @@ def get_author(id):
 
 def get_authorbooks(id):
     return Book.query.filter(Book.author == get_author(id)).all()
+
+class Cart(db.Model):
+    user = db.Column(db.Integer, db.ForeignKey("user.username"), primary_key = True)
+    id_book = db.Column(db.Integer, db.ForeignKey("book.id"), primary_key = True)
+
+    def get_ids(self):
+        return (self.user, self.id_book)
+
+    def get_user(self):
+        return self.user
+
+    def get_book(self):
+        return self.id_book
