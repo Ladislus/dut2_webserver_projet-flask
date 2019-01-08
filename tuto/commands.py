@@ -44,7 +44,7 @@ def loaddb(filename):
     books = yaml.load(open(filename))
 
     # Import des modèles
-    from .models import Author, Book
+    from .models import Author, Book, User
 
     # Première passe : création de tous les auteurs
     authors = {}
