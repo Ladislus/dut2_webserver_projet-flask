@@ -171,14 +171,19 @@ def add_author():
 
 @app.route("/added/author", methods=("POST",))
 def added_author():
-	f = AuthorForm()
-	if f.validate_on_submit():
-		adddb(Author(name=f.name.data, id=f.id.data))
-		db.session.commit()
-		return redirect(url_for('author', index=f.id.data))
-	a = get_author(int(f.id.data))
-
-	return render_template("add-author.html", author=a, form=f)
+    f = AuthorForm()
+    if f.validate_on_submit():
+        u = Author(name=f.name.data, id=f.id.data)
+        db.session.add(u)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            a = get_author(int(f.id.data))
+            return render_template("add-author.html", author=a, form=f)
+        return redirect(url_for('author', index=f.id.data))
+    a = get_author(int(f.id.data))
+    return render_template("add-author.html", author=a, form=f)
 
 class BookForm(FlaskForm):
     id  = HiddenField('id')
