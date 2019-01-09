@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Sign up :</h1>
+<form role="form" method="POST" action="{{ url_for('added_account') }}">
+  {{ form.hidden_tag() }}
+  <div class={% if form.username.errors %} "form-group has-error" {% else %} "form-group" {% endif %}>
+    {{ form.username.label }} {{ form.username(size=50, class_="form-control") }}
+  </div>
+  {% if form.username.errors %}
+  <ul class="list-group">
+    {% for e in form.username.errors %}
+    <li class="list-group-item list-group-item-danger">{{ e }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <div class={% if form.password.errors %} "form-group has-error" {% else %} "form-group" {% endif %}>
+    {{ form.password.label }} {{ form.password(size=50, class_="form-control") }}
+  </div>
+  {% if form.password.errors %}
+  <ul class="list-group">
+    {% for e in form.password.errors %}
+    <li class="list-group-item list-group-item-danger">{{ e }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <input class="btn btn-default" type="submit" value="Register">
+</form>
+{% endblock %}

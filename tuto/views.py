@@ -50,6 +50,31 @@ class AuthorForm(FlaskForm):
     id  = HiddenField('id')
     name= StringField('Nom', validators = [DataRequired()])
 
+class SignUpForm(FlaskForm):
+    username = StringField('Username', validators = [DataRequired()])
+    password = PasswordField('Password', validators = [DataRequired()])
+
+@app.route("/add/account/")
+def add_account():
+	f = SignUpForm()
+	return render_template("add-account.html", form=f)
+
+@app.route("/added/account", methods=("POST",))
+def added_account():
+    f = SignUpForm()
+    if f.validate_on_submit():
+        m = sha256()
+        m.update(f.password.data.encode())
+        u = User(username=f.username.data, password=m.hexdigest())
+        db.session.add(u)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return render_template("add-account.html", username=f.username.data, password=f.password.data, form=f)
+        return redirect(url_for('login'))
+    return render_template("add-account.html", username=f.username.data, password=f.password.data, form=f)
+
 #CART
 @app.route("/cart")
 @login_required

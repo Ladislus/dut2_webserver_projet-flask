@@ -37,6 +37,9 @@
         </a></li>
         {% else %}
         <li><a>{{ current_user.username }}</a></li>
+        <li><a href="{{ url_for('add_account') }}">
+          <span class = "glyphicon glyphicon-plus-sign" title="SignUp"></span>
+        </a></li>
         <li><a href="{{ url_for('login') }}">
           <span class = "glyphicon glyphicon-log-in" title="Login"></span>
         </a></li>
