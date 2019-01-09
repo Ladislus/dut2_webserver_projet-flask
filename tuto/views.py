@@ -58,6 +58,15 @@ def cart():
     return render_template("cart.html",
                             books = books)
 
+@app.route("/added/cart/<int:id>")
+def added_cart(id):
+    adddb(Cart(username_user=current_user.username, id_book=id))
+    db.session.commit()
+    books = get_cart_books(current_user.username)
+    return render_template("cart.html",
+                            books = books)
+
+
 #EDIT AUTHOR
 @app.route("/edit/author/<int:id>")
 @login_required
@@ -169,7 +178,6 @@ def save_book():
         id = int(f.id.data)
         b = get_book(id)
         b.title = f.title.data
-        b.price = f.price.data
         db.session.commit()
         return redirect(url_for('home', id=b.id))
     b = get_book(int(f.id.data))
@@ -177,11 +185,3 @@ def save_book():
         "edit-book.html",
         title = "Book shop",
         book = b, form = f)
-
-
-@app.route("/edit/")
-def edit():
-    return render_template(
-    "edit.html",
-    title = "Book shop"
-    )
