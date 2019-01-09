@@ -5,9 +5,9 @@
 <div class="container">
   <h2>Your cart</h2>
   <p>Search a book by name or author :</p>
-  <input class="form-control" id="myInput" type="text" placeholder="Search.." disabled>
-  <br>
-  {% if books is defined %}
+  {% if books|length > 0 %}
+    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+    <br>
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -28,8 +28,10 @@
         {% endfor %}
       </tbody>
     </table>
-    <p>Total price :{{ books | sum(attribute='price') }}</p>
+    <p>Total price : {{ books | sum(attribute='price') }} €</p>
   {% else %}
+    <input class="form-control" id="myInput" type="text" placeholder="Search.." disabled>
+    <br>
     <p>Your cart is empty.</p>
   {% endif %}
 </div>

@@ -5,12 +5,14 @@
   <p>Amazon's awesome books is the largest and biggest collection of books on Internet of the World Wide Web.
   <p>You can also find awesome things like pages, books, and authors and even login or change author or books!
   <p>Awesome isn't it?
-{% for x in BOOKS %}
-  <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
+  <br>
+  <p>Here is a sample of some books :</p>
+  <div class="col-xs-6 col-sm-8 col-md-10 col-lg-12">
+    {% for x in BOOKS %}
     <a href = "{{ url_for('book', index=x.id) }}">
       <img src=" {{ url_for('static', filename = 'images/' +x.img) }} ">
     </a>
+    {% endfor %}
   </div>
-{% endfor %}
 </div>
 {% endblock %}
