@@ -54,6 +54,9 @@ def get_authors(n = None):
 def get_author(id):
     return Author.query.get(id)
 
+def get_user(username):
+    return User.query.get(username)
+
 def get_authorbooks(id):
     return Book.query.filter(Book.author == get_author(id)).all()
 
