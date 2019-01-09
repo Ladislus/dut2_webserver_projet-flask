@@ -2,7 +2,7 @@
 {% block main %}
 <h1>Edit profil : {{ user.username }}</h1>
 <form role="form" method="POST" action="{{ url_for('save_user') }}">
-
+<br><br><br><b>WORK IN PROGRESS</b><br><br><br><br>
     {{ form.hidden_tag() }}
     <div class=
       {% if form.username.errors %}
@@ -11,8 +11,8 @@
       "form-group"
       {% endif %}
       >
-      Pseudo
-      {{ form.username(size = 50, class = "form-control") }}
+      Pseudo :
+      {{ current_user.username }}
     </div>
 
     <div class=
@@ -22,7 +22,7 @@
       "form-group"
       {% endif %}
       >
-      Password
+      Password :
       {{ form.password(size = 50, class = "form-control") }}
     </div>
 

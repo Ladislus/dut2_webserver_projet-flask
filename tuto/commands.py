@@ -24,11 +24,10 @@ def newuser(username, password):
 @click.argument('password')
 def passwd(username, password):
     '''Modifies an existing user's password'''
-    from .models import User
-    from hashlib import sha256
     m = sha256()
     m.update(password.encode())
-    u = User(username=username, password=m.hexdigest())
+    u = User.query.get(username)
+    u.password = password
     db.session.commit()
 
 @app.cli.command()
