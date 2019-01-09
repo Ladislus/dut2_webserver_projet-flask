@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 from .models import Author, User, Cart, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks, get_random_book, get_cart_books, get_user
 from hashlib import sha256
 from .commands import adddb
+from sqlalchemy.exc import IntegrityError
 
 #LOGIN
 class LoginForm(FlaskForm):
@@ -59,9 +60,12 @@ def cart():
 
 @app.route("/added/cart/<int:id>")
 def added_cart(id):
-    c = Cart(username_user=current_user.username, id_book=id)
-    db.session.add(c)
-    db.session.commit()
+    try:
+        c = Cart(username_user=current_user.username, id_book=id)
+        db.session.add(c)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
     books = get_cart_books(current_user.username)
     return render_template("cart.html",
                             books = books)
