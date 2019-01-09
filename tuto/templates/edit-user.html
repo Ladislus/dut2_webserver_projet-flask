@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
 <h1>Edit profil : {{ user.username }}</h1>
+<form role="form" method="POST" action="{{ url_for('save_user') }}">
 
     {{ form.hidden_tag() }}
     <div class=
@@ -10,9 +11,22 @@
       "form-group"
       {% endif %}
       >
-      {{ form.username.label }}
+      Pseudo
       {{ form.username(size = 50, class = "form-control") }}
     </div>
+
+    <div class=
+      {% if form.password.errors %}
+      "form-group has errors"
+      {% else %}
+      "form-group"
+      {% endif %}
+      >
+      Password
+      {{ form.password(size = 50, class = "form-control") }}
+    </div>
+
+
     <form role="form" method="POST" action="{{ url_for('save_user') }}">
     <p><p>
     {% if form.username.errors%}
@@ -22,6 +36,15 @@
       {% endfor %}
     </ul>
     {% endif %}
+
+    {% if form.password.errors%}
+    <ul class ="list-group">
+      {% for e in form.password.errors %}
+      <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
     <input class="btn btn-default" type="submit" value="Save changes">
 </form>
 {% endblock %}
