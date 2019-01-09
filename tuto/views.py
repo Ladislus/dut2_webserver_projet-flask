@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_login import login_user, current_user, login_required, logout_user
 from wtforms import StringField, HiddenField, PasswordField
 from wtforms.validators import DataRequired
-from .models import Author, User, Cart, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks, get_random_book, get_cart_books
+from .models import Author, User, Cart, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks, get_random_book, get_cart_books, get_user
 from hashlib import sha256
 from .commands import adddb
 
