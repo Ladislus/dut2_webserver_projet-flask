@@ -19,6 +19,10 @@
   </a>
 {% endif %}
 
+{% if current_user.is_authenticated %}
+  <a href="{{ url_for('edit_book', id=BOOKS.id) }}" class="btn btn-primary" role="button">Edit book's page</a>
+{% endif %}
+
 {% endblock %}
 {% block js %}
 {{ super() }}

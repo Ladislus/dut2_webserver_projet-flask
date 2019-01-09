@@ -175,6 +175,7 @@ def save_book():
         id = int(f.id.data)
         b = get_book(id)
         b.title = f.title.data
+        b.price = f.price.data
         db.session.commit()
         return redirect(url_for('home', id=b.id))
     b = get_book(int(f.id.data))
@@ -182,3 +183,11 @@ def save_book():
         "edit-book.html",
         title = "Book shop",
         book = b, form = f)
+
+
+@app.route("/edit/")
+def edit():
+    return render_template(
+    "edit.html",
+    title = "Book shop"
+    )
