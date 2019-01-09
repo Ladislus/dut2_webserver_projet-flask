@@ -32,6 +32,18 @@ def passwd(username, password):
     db.session.commit()
 
 @app.cli.command()
+@click.argument('name')
+@click.argument('id')
+def addcarted(name, id):
+    """
+    Temporary function to add a book to an user cart
+    """
+    from .models import Cart
+    c = Cart(username_user=name, id_book = id)
+    db.session.add(c)
+    db.session.commit()
+
+@app.cli.command()
 @click.argument('filename')
 def loaddb(filename):
     '''Creates the tables and populates them with data.'''
