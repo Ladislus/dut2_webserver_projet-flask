@@ -54,13 +54,13 @@ class AuthorForm(FlaskForm):
 @login_required
 def cart():
     books = get_cart_books(current_user.username)
-    print(books)
     return render_template("cart.html",
                             books = books)
 
 @app.route("/added/cart/<int:id>")
 def added_cart(id):
-    adddb(Cart(username_user=current_user.username, id_book=id))
+    c = Cart(username_user=current_user.username, id_book=id)
+    db.session.add(c)
     db.session.commit()
     books = get_cart_books(current_user.username)
     return render_template("cart.html",

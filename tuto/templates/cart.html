@@ -7,9 +7,9 @@
   <p>Search a book by name or author :</p>
   <input class="form-control" id="myInput" type="text" placeholder="Search.." disabled>
   <br>
-  {% if variable is defined %}
+  {% if books is defined %}
     <script>
-      document.getElementsByTagName("input")[0].setAttribute("disabled", "false");
+      document.getElementsByTagName("input")[0].setAttribute("disabled", "true");
     </script>
     <table class="table table-bordered table-striped">
       <thead>
@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody id="myTable">
-        {% for x in BOOKS %}
+        {% for x in books %}
         <tr>
           <td><a href = "{{ url_for('book', index=x.id) }}"><img src=" {{ url_for('static', filename = 'images/' +x.img) }} "></a></td>
           <td><a href = "{{ url_for('book', index=x.id) }}">{{ x.title }}</a></td>
@@ -31,7 +31,7 @@
         {% endfor %}
       </tbody>
     </table>
-    <p>Total price :{{ BOOKS | sum(attribute='price') }}</p>
+    <p>Total price :{{ books | sum(attribute='price') }}</p>
   {% else %}
     <p>Your cart is empty.</p>
   {% endif %}
