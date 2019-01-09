@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired
 from .models import Author, User, Cart, get_books, get_book, get_sample, get_authors, get_author, get_authorbooks, get_random_book, get_cart_books, get_user
 from hashlib import sha256
 from .commands import adddb
+from sqlalchemy.exc import IntegrityError
 
 #LOGIN
 class LoginForm(FlaskForm):
@@ -54,14 +55,17 @@ class AuthorForm(FlaskForm):
 @login_required
 def cart():
     books = get_cart_books(current_user.username)
-    print(books)
     return render_template("cart.html",
                             books = books)
 
 @app.route("/added/cart/<int:id>")
 def added_cart(id):
-    adddb(Cart(username_user=current_user.username, id_book=id))
-    db.session.commit()
+    try:
+        c = Cart(username_user=current_user.username, id_book=id)
+        db.session.add(c)
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
     books = get_cart_books(current_user.username)
     return render_template("cart.html",
                             books = books)
@@ -90,7 +94,7 @@ def save_author():
         a.name = f.name.data
         db.session.commit()
         return redirect(url_for('home', id=a.id))
-    a = get_author((f.id.data))
+    a = get_author(int(f.id.data))
     return render_template(
         "edit-author.html",
         title = "Book shop",
@@ -178,7 +182,6 @@ def save_book():
         id = int(f.id.data)
         b = get_book(id)
         b.title = f.title.data
-        b.price = f.price.data
         db.session.commit()
         return redirect(url_for('home', id=b.id))
     b = get_book(int(f.id.data))
@@ -197,8 +200,8 @@ def edit():
 
 
 class UserForm(FlaskForm):
-    username  = StringField('username')
-    password  = PasswordField('password')
+    username  = HiddenField('username')
+    password  = StringField('password')
 
 #EDIT USER
 @app.route("/edit/user/<username>")
@@ -216,7 +219,7 @@ def edit_user(username):
 @app.route("/save/user/", methods=('POST',))
 def save_user():
     u = None
-    f = UserForm()
+    f = AuthorForm()
     if f.validate_on_submit():
         username = f.username.data
         u = get_user(username)
@@ -225,7 +228,6 @@ def save_user():
         db.session.commit()
         return redirect(url_for('home', username=u.username))
     u = get_user(f.username.data)
-    print(f)
     return render_template(
         "edit-user.html",
         title = "Book shop",
