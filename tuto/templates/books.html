@@ -1,6 +1,46 @@
 {% extends "base.html" %}
 {%block main %}
-<div class="row">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container">
+  <h2>Books list</h2>
+  <p>Search a book by name or author :</p>
+  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+  <br>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>First page</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="myTable">
+      {% for x in BOOKS %}
+      <tr>
+        <td><a href = "{{ url_for('book', index=x.id) }}"><img src=" {{ url_for('static', filename = 'images/' +x.img) }} "></a></td>
+        <td><a href = "{{ url_for('book', index=x.id) }}">{{ x.title }}</a></td>
+        <td><a href = "{{ url_for('author', index=x.author_id) }}">{{ x.author.name }}</a></td>
+        <td>{{ x.price }} €</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+<!-- <div class="row">
 {% for x in BOOKS %}
   <div class="col-xs-6 col-sm-4 col-md-3 col-lg-1">
     <a href = "{{ url_for('book', index=x.id) }}">
@@ -8,7 +48,7 @@
     </a>
   </div>
 {% endfor %}
-</div>
+</div> -->
 {% endblock %}
 {% block js %}
 {{ super() }}
