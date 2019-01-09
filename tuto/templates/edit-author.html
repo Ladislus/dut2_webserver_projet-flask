@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block main %}
 <h1>Edit author : {{ author.name }}</h1>
+<form role="form" method="POST" action="{{ url_for('save_author') }}">
 
     {{ form.hidden_tag() }}
     <div class=
