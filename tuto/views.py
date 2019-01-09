@@ -225,15 +225,15 @@ def edit():
 
 
 class UserForm(FlaskForm):
-    username  = HiddenField('username')
-    password  = StringField('password')
+    username = HiddenField('username')
+    password  = PasswordField('password')
 
 #EDIT USER
 @app.route("/edit/user/<username>")
 @login_required
 def edit_user(username):
     u = get_user(username)
-    f = UserForm(username=u.username, password=u.password)
+    f = UserForm(password=u.password)
     return render_template(
         "edit-user.html",
         title="Book shop",
@@ -243,16 +243,14 @@ def edit_user(username):
 #SAVE USER
 @app.route("/save/user/", methods=('POST',))
 def save_user():
-    u = None
-    f = AuthorForm()
+    f = UserForm()
     if f.validate_on_submit():
-        username = f.username.data
-        u = get_user(username)
-        u.username = f.username.data
-        u.password = f.password.data
+        u = User.query.get(current_user.username)
+        m = sha256()
+        m.update(f.password.data.encode())
+        u.password = m.hexdigest()
         db.session.commit()
-        return redirect(url_for('home', username=u.username))
-    u = get_user(f.username.data)
+    u = current_user.username
     return render_template(
         "edit-user.html",
         title = "Book shop",
