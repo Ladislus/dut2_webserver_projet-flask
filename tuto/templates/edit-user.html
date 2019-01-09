@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+<h1>Edit profil : {{ user.username }}</h1>
+
+    {{ form.hidden_tag() }}
+    <div class=
+      {% if form.username.errors %}
+      "form-group has errors"
+      {% else %}
+      "form-group"
+      {% endif %}
+      >
+      {{ form.username.label }}
+      {{ form.username(size = 50, class = "form-control") }}
+    </div>
+    <form role="form" method="POST" action="{{ url_for('save_user') }}">
+    <p><p>
+    {% if form.username.errors%}
+    <ul class ="list-group">
+      {% for e in form.username.errors %}
+      <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <input class="btn btn-default" type="submit" value="Save changes">
+</form>
+{% endblock %}
