@@ -2,7 +2,6 @@
 {% block main %}
 <h1>Edit profil : {{ user.username }}</h1>
 <form role="form" method="POST" action="{{ url_for('save_user') }}">
-<br><br><br><b>WORK IN PROGRESS</b><br><br><br><br>
     {{ form.hidden_tag() }}
     <div class=
       {% if form.username.errors %}

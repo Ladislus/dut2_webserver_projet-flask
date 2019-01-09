@@ -226,7 +226,4 @@ def save_user():
         u.password = m.hexdigest()
         db.session.commit()
     u = current_user.username
-    return render_template(
-        "edit-user.html",
-        title = "Book shop",
-        user = u, form = f)
+    return redirect(url_for('home'))
