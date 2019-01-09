@@ -1,1 +1,14 @@
-very huge test.
+{% extends "base.html" %}
+{% block main %}
+<h1>Edit</h1>
+<p>You can select an edit button from here</p>
+
+<p>
+<a href="{{ url_for('edit_user', username=current_user.username) }}" class="btn btn-primary" role="button">Edit user's page</a>
+<p>
+<a href="{{ url_for('edit_author', id=1) }}" class="btn btn-primary" role="button">Edit author's page</a>
+<p>
+<a href="{{ url_for('edit_book', id=1) }}" class="btn btn-primary" role="button">Edit book's page</a>
+<p>
+
+{% endblock %}

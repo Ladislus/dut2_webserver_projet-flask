@@ -185,3 +185,46 @@ def save_book():
         "edit-book.html",
         title = "Book shop",
         book = b, form = f)
+
+
+@app.route("/edit/")
+def edit():
+    return render_template(
+    "edit.html",
+    title = "Book shop"
+    )
+
+
+class UserForm(FlaskForm):
+    username  = HiddenField('username')
+    password  = StringField('password')
+
+#EDIT USER
+@app.route("/edit/user/<username>")
+@login_required
+def edit_user(username):
+    u = get_user(username)
+    f = UserForm(username=u.username, password=u.password)
+    return render_template(
+        "edit-user.html",
+        title="Book shop",
+        user=u, form=f
+    )
+
+#SAVE USER
+@app.route("/save/user/", methods=('POST',))
+def save_user():
+    u = None
+    f = AuthorForm()
+    if f.validate_on_submit():
+        username = f.username.data
+        u = get_user(username)
+        u.username = f.username.data
+        u.password = f.password.data
+        db.session.commit()
+        return redirect(url_for('home', username=u.username))
+    u = get_user(f.username.data)
+    return render_template(
+        "edit-user.html",
+        title = "Book shop",
+        user = u, form = f)

@@ -14,8 +14,7 @@
 </div>
 
 {% if current_user.is_authenticated %}
-
-  <a href = "{{ url_for('added_cart', id=BOOKS.id) }}">
+  <a href = "{{ url_for('added_cart', index=BOOKS.id) }}">
     <input type="submit" class="btn btn-primary" value="Add to Cart">
   </a>
 {% endif %}
