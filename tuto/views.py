@@ -58,6 +58,15 @@ def cart():
     return render_template("cart.html",
                             books = books)
 
+@app.route("/added/cart/<int:id>")
+def added_cart(id):
+    adddb(Cart(username_user=current_user.username, id_book=id))
+    db.session.commit()
+    books = get_cart_books(current_user.username)
+    return render_template("cart.html",
+                            books = books)
+
+
 #EDIT AUTHOR
 @app.route("/edit/author/<int:id>")
 @login_required
@@ -142,12 +151,6 @@ def added_author():
 
 	return render_template("add-author.html", author=a, form=f)
 
-@app.route("/added/cart", methods=("POST",))
-def added_cart(id):
-    adddb(Cart(username=current_user.username, id_book=id))
-    db.session.commit()
-    return redirect(url_for('cart'))
-
 class BookForm(FlaskForm):
     id  = HiddenField('id')
     title= StringField('Title', validators = [DataRequired()])
@@ -175,7 +178,6 @@ def save_book():
         id = int(f.id.data)
         b = get_book(id)
         b.title = f.title.data
-        b.price = f.price.data
         db.session.commit()
         return redirect(url_for('home', id=b.id))
     b = get_book(int(f.id.data))

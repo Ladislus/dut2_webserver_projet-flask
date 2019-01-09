@@ -19,7 +19,6 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li id="tab-home"><a href="/">Home</a></li>
         <li id="tab-books"><a href="/books">Books</a></li>
         <li id="tab-authors"><a href="/authors">Authors</a></li>
         {% if current_user.is_authenticated %}
@@ -30,9 +29,7 @@
       <ul class = "nav navbar-nav navbar-right">
         {% if current_user.is_authenticated %}
         <li><a>{{ current_user.username }}</a></li>
-        <li><a href="{{ url_for('edit') }}">
-          <span class = "glyphicon glyphicon-cog" title="Edit"></span>
-        </a></li>
+
         <li><a href="{{ url_for('logout') }}">
           <span class = "glyphicon glyphicon-log-out" title="Logout"></span>
         </a></li>
