@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block main %}
+<h1>Login :</h1>
 <form class = "form-horizontal" role="form" method="POST" action="{{url_for('login') }}">
   {{ form.hidden_tag() }}
   <div class = "form-group">
